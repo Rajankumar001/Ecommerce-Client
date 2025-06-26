@@ -1,7 +1,19 @@
 import React from 'react';
 import { NavLink,Link } from 'react-router-dom';
 import { GiLargeDress } from "react-icons/gi";
+import toast from "react-hot-toast";
+import { useAuth } from "../../context/auth";
 function Header() {
+   const [auth, setAuth] = useAuth();
+    const handleLogout = () => {
+    setAuth({
+      ...auth,
+      user: null,
+      token: "",
+    });
+    localStorage.removeItem("auth");
+    toast.success("Logout Successfully");
+  };
   return (
     <>
   <nav className="navbar navbar-expand-lg ">
@@ -28,7 +40,9 @@ function Header() {
             Home
           </NavLink>
         </li>
-        <li className="nav-item">
+        {
+          !auth.user?(<>
+          <li className="nav-item">
           <NavLink  to='/register'className="nav-link" href="#">
            Register
           </NavLink>
@@ -38,6 +52,14 @@ function Header() {
            Login
           </NavLink>
         </li>
+          </>):(<>
+          <li className="nav-item">
+          <NavLink  to='/login' onClick={handleLogout} className="nav-link" href="#">
+           logout
+          </NavLink>
+        </li>
+          </>)
+        }
          <li className="nav-item">
           <NavLink  to='/register'className="nav-link" href="#">
            Cart(0)
