@@ -4,35 +4,42 @@ import { useCart } from "../context/cart";
 import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
 import DropIn from "braintree-web-drop-in-react";
-import { AiFillWarning } from "react-icons/ai";
 import axios from "axios";
 import toast from "react-hot-toast";
 import "./CartPage.css";
 
 const CartPage = () => {
+  const baseUrl="https://ecommerce-server-zfc6.onrender.com"
   const [auth, setAuth] = useAuth();
   const [cart, setCart] = useCart();
   const [clientToken, setClientToken] = useState("");
-  const [instance, setInstance] = useState("");
+  const [instance, setInstance] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  //total price
+  useEffect(() => {
+    console.log("Auth:", auth);
+    console.log("Cart:", cart);
+    console.log("Client Token:", clientToken);
+    console.log("DropIn Instance:", instance);
+    console.log("User Address:", auth?.user?.address);
+  }, [auth, cart, clientToken, instance]);
+
   const totalPrice = () => {
     try {
       let total = 0;
-      cart?.map((item) => {
-        total = total + item.price;
+      cart?.forEach((item) => {
+        total += item.price;
       });
       return total.toLocaleString("en-US", {
         style: "currency",
         currency: "USD",
       });
     } catch (error) {
-      console.log(error);
+      console.log("Total Price Error:", error);
     }
   };
-  //detele item
+
   const removeCartItem = (pid) => {
     try {
       let myCart = [...cart];
@@ -41,29 +48,35 @@ const CartPage = () => {
       setCart(myCart);
       localStorage.setItem("cart", JSON.stringify(myCart));
     } catch (error) {
-      console.log(error);
+      console.log("Remove Item Error:", error);
     }
   };
 
-  //get payment gateway token
+  // ✅ Fixed: Fetch and log token properly
   const getToken = async () => {
     try {
-      const { data } = await axios.get("/api/product/braintree/token");
-      setClientToken(data?.clientToken);
+      const { data } = await axios.get(`${baseUrl}/api/product/braintree/token`);
+      console.log("Fetched token:", data);
+      setClientToken(data?.clientToken || data?.clientToken?.clientToken);
     } catch (error) {
-      console.log(error);
+      console.log("Token Error:", error);
     }
   };
+
   useEffect(() => {
     getToken();
   }, [auth?.token]);
 
-  //handle payments
+  // ✅ Fixed: Guard against null instance and log error
   const handlePayment = async () => {
     try {
+      if (!instance) {
+        console.log("DropIn instance is null");
+        return;
+      }
       setLoading(true);
       const { nonce } = await instance.requestPaymentMethod();
-      const { data } = await axios.post("/api/product/braintree/payment", {
+      const { data } = await axios.post(`${baseUrl}/api/product/braintree/payment`, {
         nonce,
         cart,
       });
@@ -71,15 +84,16 @@ const CartPage = () => {
       localStorage.removeItem("cart");
       setCart([]);
       navigate("/dashboard/user/orders");
-      toast.success("Payment Completed Successfully ");
+      toast.success("Payment Completed Successfully");
     } catch (error) {
-      console.log(error);
+      console.log("Payment Error:", error);
       setLoading(false);
     }
   };
+
   return (
     <Layout>
-      <div className=" cart-page">
+      <div className="cart-page">
         <div className="row">
           <div className="col-md-12">
             <h1 className="text-center bg-light p-2 mb-1">
@@ -96,14 +110,14 @@ const CartPage = () => {
             </h1>
           </div>
         </div>
-        <div className="container ">
-          <div className="row ">
-            <div className="col-md-7  p-0 m-0">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-7">
               {cart?.map((p) => (
                 <div className="row card flex-row" key={p._id}>
                   <div className="col-md-4">
                     <img
-                      src={`/api/product/product-photo/${p._id}`}
+                      src={`${baseUrl}/api/product/product-photo/${p._id}`}
                       className="card-img-top"
                       alt={p.name}
                       width="100%"
@@ -126,24 +140,21 @@ const CartPage = () => {
                 </div>
               ))}
             </div>
-            <div className="col-md-5 cart-summary ">
+            <div className="col-md-5 cart-summary">
               <h2>Cart Summary</h2>
-              <p>Total | Checkout | Payment</p>
               <hr />
               <h4>Total : {totalPrice()} </h4>
               {auth?.user?.address ? (
-                <>
-                  <div className="mb-3">
-                    <h4>Current Address</h4>
-                    <h5>{auth?.user?.address}</h5>
-                    <button
-                      className="btn btn-outline-warning"
-                      onClick={() => navigate("/dashboard/user/profile")}
-                    >
-                      Update Address
-                    </button>
-                  </div>
-                </>
+                <div className="mb-3">
+                  <h4>Current Address</h4>
+                  <h5>{auth?.user?.address}</h5>
+                  <button
+                    className="btn btn-outline-warning"
+                    onClick={() => navigate("/dashboard/user/profile")}
+                  >
+                    Update Address
+                  </button>
+                </div>
               ) : (
                 <div className="mb-3">
                   {auth?.token ? (
@@ -157,12 +168,10 @@ const CartPage = () => {
                     <button
                       className="btn btn-outline-warning"
                       onClick={() =>
-                        navigate("/login", {
-                          state: "/cart",
-                        })
+                        navigate("/login", { state: "/cart" })
                       }
                     >
-                      Plase Login to checkout
+                      Please Login to checkout
                     </button>
                   )}
                 </div>
@@ -179,11 +188,13 @@ const CartPage = () => {
                           flow: "vault",
                         },
                       }}
-                      onInstance={(instance) => setInstance(instance)}
+                      onInstance={(instance) => {
+                        console.log("DropIn initialized", instance);
+                        setInstance(instance);
+                      }}
                     />
-
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary mt-3"
                       onClick={handlePayment}
                       disabled={loading || !instance || !auth?.user?.address}
                     >

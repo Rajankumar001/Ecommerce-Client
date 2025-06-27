@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const { Option } = Select;
 
 const CreateProduct = () => {
+  const baseUrl="https://ecommerce-server-zfc6.onrender.com"
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
@@ -20,7 +21,7 @@ const CreateProduct = () => {
   //get all category
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/category/get-category");
+      const { data } = await axios.get(`${baseUrl}/api/category/get-category`);
       if (data?.success) {
         setCategories(data?.category);
       }
@@ -46,7 +47,7 @@ const CreateProduct = () => {
       productData.append("photo", photo);
       productData.append("category", category);
       const { data } = axios.post(
-        "/api/product/create-product",
+        `${baseUrl}/api/product/create-product`,
         productData
       );
       if (data?.success) {

@@ -5,12 +5,13 @@ import axios from "axios";
 import Spinner from "../Spinner.js";
 
 export default function PrivateRoute() {
+  const baseUrl="https://ecommerce-server-zfc6.onrender.com"
   const [ok, setOk] = useState(false);
   const [auth, setAuth] = useAuth();
 
   useEffect(() => {
     const authCheck = async () => {
-      const res = await axios.get("/api/auth/user-auth");
+      const res = await axios.get(`${baseUrl}/api/auth/user-auth`);
       if (res.data.ok) {
         setOk(true);
       } else {

@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "./../components/Layout/Layout";
 import { useSearch } from "../context/search";
 const Search = () => {
+  const baseUrl="https://ecommerce-server-zfc6.onrender.com"
   const [values, setValues] = useSearch();
   return (
     <Layout title={"Search results"}>
@@ -17,7 +18,7 @@ const Search = () => {
             {values?.results.map((p) => (
               <div className="card m-2" style={{ width: "18rem" }}>
                 <img
-                  src={`/api/product/product-photo/${p._id}`}
+                  src={`${baseUrl}/api/product/product-photo/${p._id}`}
                   className="card-img-top"
                   alt={p.name}
                 />

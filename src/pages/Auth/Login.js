@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import "./Register.css";
 import { useAuth } from "../../context/auth";
 const Login = () => {
+  const baseUrl="https://ecommerce-server-zfc6.onrender.com"
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [auth, setAuth] = useAuth();
@@ -17,7 +18,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/auth/login", {
+      const res = await axios.post(`${baseUrl}/api/auth/login`, {
         email,
         password,
       });

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "./Register.css";
 const Register = () => {
+  const baseUrl="https://ecommerce-server-zfc6.onrender.com"
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +17,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/auth/register", {
+      const res = await axios.post(`${baseUrl}/api/auth/register`, {
         name,
         email,
         password,

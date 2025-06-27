@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import "./Register.css";
 
 const ForgotPasssword = () => {
+  const baseUrl="https://ecommerce-server-zfc6.onrender.com"
   const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [answer, setAnswer] = useState("");
@@ -16,7 +17,7 @@ const ForgotPasssword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/auth/forgot-password", {
+      const res = await axios.post(`${baseUrl}/api/auth/forgot-password`, {
         email,
         newPassword,
         answer,

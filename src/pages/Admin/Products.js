@@ -6,11 +6,11 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 const Products = () => {
   const [products, setProducts] = useState([]);
-
+const baseUrl="https://ecommerce-server-zfc6.onrender.com"
   //getall products
   const getAllProducts = async () => {
     try {
-      const { data } = await axios.get("/api/product/get-product");
+      const { data } = await axios.get(`${baseUrl}/api/product/get-product`);
       setProducts(data.products);
     } catch (error) {
       console.log(error);
@@ -39,7 +39,7 @@ const Products = () => {
               >
                 <div className="card m-2" style={{ width: "18rem" }}>
                   <img
-                    src={`/api/product/product-photo/${p._id}`}
+                    src={`${baseUrl}/api/product/product-photo/${p._id}`}
                     className="card-img-top"
                     alt={p.name}
                   />
