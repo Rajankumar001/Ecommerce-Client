@@ -19,11 +19,15 @@ import AdminOrders from './pages/Admin/AdminOrders';
 import Pagenotfound from './pages/Pagenotfound';
 import Orders from './pages/user/Orders';
 import Profile from './pages/user/Profile';
+import Search from './pages/Search';
+import ProductDetail from './pages/ProductDetail';
+import CartPage from './pages/CartPage';
 function App() {
   return (
     <>
 <Routes>
   <Route path='/' element={<HomePage/>}/>
+   <Route path="/product/:slug" element={<ProductDetail />} />
     <Route path="/dashboard" element={<PrivateRoute />}>
              <Route path="user" element={<Dashboard />} />
               <Route path="user/orders" element={<Orders />} />
@@ -38,7 +42,9 @@ function App() {
           <Route path="admin/users" element={<Users/>} />
           <Route path="admin/orders" element={<AdminOrders />} />
         </Route>
+        <Route path="/cart" element={<CartPage />} />
   <Route path='/about' element={<About/>}/>
+   <Route path='/search' element={<Search/>}/>
   <Route path='/contact' element={<Contact/>}/>
   <Route path='/register' element={<Register/>}/>
   <Route path='/login' element={<Login/>}/>

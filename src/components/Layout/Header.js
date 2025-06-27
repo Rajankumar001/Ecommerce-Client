@@ -3,7 +3,12 @@ import { NavLink,Link } from 'react-router-dom';
 import { GiLargeDress } from "react-icons/gi";
 import toast from "react-hot-toast";
 import { useAuth } from "../../context/auth";
+import { useCart } from "../../context/cart";
+import { Badge } from "antd";
+
+import SearchInput from '../Form/SearchInput';
 function Header() {
+  const [cart] = useCart();
    const [auth, setAuth] = useAuth();
     const handleLogout = () => {
     setAuth({
@@ -35,6 +40,7 @@ function Header() {
     <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
      
       <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+        <SearchInput/>
         <li className="nav-item">
           <NavLink  to='/' className="nav-link active" aria-current="page" href="#">
             Home
@@ -87,11 +93,13 @@ function Header() {
                   </li>
           </>)
         }
-         <li className="nav-item">
-          <NavLink  to='/register'className="nav-link" href="#">
-           Cart(0)
-          </NavLink>
-        </li>
+               <li className="nav-item">
+                <NavLink to="/cart" className="nav-link">
+                  <Badge count={cart?.length} showZero offset={[10, -5]}>
+                    Cart
+                  </Badge>
+                </NavLink>
+              </li>
       </ul>
     </div>
   </div>

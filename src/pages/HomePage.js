@@ -11,7 +11,7 @@ import "./HomePage.css";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  // const [cart, setCart] = useCart();
+  const [cart, setCart] = useCart();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -179,7 +179,7 @@ const HomePage = () => {
                       </h5>
                     </div>
                     <p className="card-text">
-                      {p.description?.substring(0, 60)}...
+                      {p.description?.substring(0, 40)}...
                     </p>
                     <div className="card-name-price">
                       <button
@@ -188,7 +188,7 @@ const HomePage = () => {
                       >
                         More Details
                       </button>
-                      {/* <button
+                      <button
                         className="btn btn-dark ms-1"
                         onClick={() => {
                           setCart([...cart, p]);
@@ -200,7 +200,7 @@ const HomePage = () => {
                         }}
                       >
                         ADD TO CART
-                      </button> */}
+                      </button>
                     </div>
                   </div>
                 </div>
