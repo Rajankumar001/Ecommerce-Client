@@ -6,12 +6,12 @@ import { useAuth } from "../../context/auth";
 import moment from "moment";
 
 const Orders = () => {
-  const baseUrl="https://ecommerce-server-zfc6.onrender.com"
+   const baseUrl="https://ecommerce-server-zfc6.onrender.com"
   const [orders, setOrders] = useState([]);
   const [auth, setAuth] = useAuth();
   const getOrders = async () => {
     try {
-      const { data } = await axios.get(`${baseUrl}/api//auth/orders`);
+      const { data } = await axios.get(`${baseUrl}/api/auth/orders`);
       setOrders(data);
     } catch (error) {
       console.log(error);
@@ -60,7 +60,7 @@ const Orders = () => {
                       <div className="row mb-2 p-3 card flex-row" key={p._id}>
                         <div className="col-md-4">
                           <img
-                            src={`${baseUrl}/api/product/product-photo/${p._id}`}
+                            src={`/api/v1/product/product-photo/${p._id}`}
                             className="card-img-top"
                             alt={p.name}
                             width="100px"

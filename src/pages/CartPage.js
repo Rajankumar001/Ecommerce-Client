@@ -13,7 +13,7 @@ const CartPage = () => {
   const [auth, setAuth] = useAuth();
   const [cart, setCart] = useCart();
   const [clientToken, setClientToken] = useState("");
-  const [instance, setInstance] = useState(null);
+  const [instance, setInstance] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -178,21 +178,30 @@ const CartPage = () => {
               )}
               <div className="mt-2">
                 {!clientToken || !auth?.token || !cart?.length ? (
-                  ""
+                  <h2>Loading ....</h2>
                 ) : (
                   <>
-                    <DropIn
-                      options={{
-                        authorization: clientToken,
-                        paypal: {
-                          flow: "vault",
-                        },
-                      }}
-                      onInstance={(instance) => {
-                        console.log("DropIn initialized", instance);
-                        setInstance(instance);
-                      }}
-                    />
+                        <DropIn
+        options={{
+          authorization: clientToken,
+          paypal: {
+            flow: "vault",
+          },
+        }}
+        onInstance={(instance) => {
+          console.log("DropIn initialized", instance);
+          setInstance(instance);
+        }}
+      />
+      {/* Fallback inputs if DropIn fails */}
+      <div className="custom-card-fields">
+        <input type="text" placeholder="Card Number" />
+        <input type="text" placeholder="MM/YY" />
+        <input type="text" placeholder="CVV" />
+        <small style={{ color: "#999" }}>
+          If payment UI doesn't appear above, it's likely a browser issue.
+        </small>
+      </div>
                     <button
                       className="btn btn-primary mt-3"
                       onClick={handlePayment}
