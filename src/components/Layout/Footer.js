@@ -51,11 +51,11 @@ function Footer() {
             <div className="footer-column">
               <h3 className="footer-title">SUPPORT</h3>
               <ul className="footer-links">
-                <li><a href="#contact">Contact Us</a></li>
-                <li><a href="#account">Account</a></li>
-                <li><a href="#locations">Store Locations</a></li>
-                <li><a href="#shipping">Shipping And Delivery</a></li>
-                <li><a href="#returns">Returns</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/account">Account</a></li>
+                <li><a href="/locations">Store Locations</a></li>
+                <li><a href="/#">Shipping And Delivery</a></li>
+                <li><a href="/returns">Returns</a></li>
               </ul>
             </div>
 
@@ -63,11 +63,9 @@ function Footer() {
             <div className="footer-column">
               <h3 className="footer-title">INFO</h3>
               <ul className="footer-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#career">Career</a></li>
-                <li><a href="#sustainability">Sustainability</a></li>
-                <li><a href="#investor">Investor Relations</a></li>
-                <li><a href="#press">Press</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/career">Career</a></li>
+
               </ul>
             </div>
           </div>
@@ -95,10 +93,10 @@ function Footer() {
             <div className="footer-legal">
               <span className="copyright">© 2025 Faishon Ecommerce</span>
               <div className="legal-links">
-                <a href="#cookies">Cookies</a>
-                <a href="#privacy">Privacy Policy</a>
-                <a href="#terms">Terms and Conditions</a>
-                <a href="#sitemap">Sitemap</a>
+                <a href="/cookies">Cookies</a>
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/terms">Terms and Conditions</a>
+                <a href="/sitemap">Sitemap</a>
               </div>
             </div>
             <div className="country-selector">
