@@ -54,3 +54,38 @@
   background-color: black;
   color: white;
 }
+.moreDetail{
+  background: none;
+  border: 2px solid  #D63357;
+  color: #D63357;;
+}
+.addtoCart{
+   background:#D63357 ;
+  color: #fff;
+}
+.moreDetail:hover{
+  background:#D63357 ;
+  color: #fff;
+}
+.addtoCart:hover{
+   background: none;
+  border: 2px solid  #D63357;
+  color: #D63357;
+}
+.card-name-button{
+  font-family: "Playfair Display", sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.cart-detail{
+   font-family: "poppins", sans-serif;
+}
+.card-border{
+  box-shadow: 8px 8px -8px #444444;
+}
+.cart-guest-box{
+  background-color: #D63357;
+  color: #fff;
+  font-family: "poppins", sans-serif;
+}

@@ -21,6 +21,7 @@ const HomePage = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
+
   // get all categories
   const getAllCategory = async () => {
     try {
@@ -158,54 +159,54 @@ const HomePage = () => {
         </div>
 
         <div className="col-md-9">
-          <br></br>
-          {/* <h1 className="text-center">All Products</h1> */}
-          <div className="d-flex flex-wrap mr-3">
-            {Array.isArray(products) &&
-              products.map((p) => (
-                <div className="card m-2 " key={p._id}>
-                  <img
-                    src={`${baseUrl}/api/product/product-photo/${p._id}`}
-                    className="card-img-top"
-                    alt={p.name}
-                  />
-                  <div className="card-body">
-                    <div className="card-name-price">
-                      <h5 className="card-title">{p.name}</h5>
-                      <h5 className="card-title card-price">
-                        {p.price.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                        })}
-                      </h5>
-                    </div>
-                    <p className="card-text">
-                      {p.description?.substring(0, 40)}...
-                    </p>
-                    <div className="card-name-price">
-                      <button
-                        className="btn btn-info ms-1"
-                        onClick={() => navigate(`/product/${p.slug}`)}
-                      >
-                        More Details
-                      </button>
-                      <button
-                        className="btn btn-dark ms-1"
-                        onClick={() => {
-                          setCart([...cart, p]);
-                          localStorage.setItem(
-                            "cart",
-                            JSON.stringify([...cart, p])
-                          );
-                          toast.success("Item Added to cart");
-                        }}
-                      >
-                        ADD TO CART
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
+        <hr></hr>
+          <div className="d-flex flex-wrap justify-content-start">
+           {loading ? (
+    <h2 className="text-center w-100">Loading...</h2>
+  ) : (
+    Array.isArray(products) &&
+    products.map((p) => (
+      <div className="card m-2 " key={p._id}>
+        <img
+          src={`${baseUrl}/api/product/product-photo/${p._id}`}
+          className="card-img-top"
+          alt={p.name}
+        />
+        <div className="card-body">
+          <div className="card-name-price">
+            <h5 className="card-title">{p.name}</h5>
+            <h5 className="card-title card-price">
+              {p.price.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </h5>
+          </div>
+          <p className="card-text">
+            {p.description?.substring(0, 10)}...
+          </p>
+          <div className="card-name-price ">
+            <button
+              className="btn btn-info ms-1 moreDetail"
+              onClick={() => navigate(`/product/${p.slug}`)}
+            >
+              More Details
+            </button>
+            <button
+              className="btn btn-dark ms-1 addtoCart"
+              onClick={() => {
+                setCart([...cart, p]);
+                localStorage.setItem("cart", JSON.stringify([...cart, p]));
+                toast.success("Item Added to cart");
+              }}
+            >
+              ADD TO CART
+            </button>
+          </div>
+        </div>
+      </div>
+    ))
+  )}
           </div>
 
           <div className="m-2 p-3">

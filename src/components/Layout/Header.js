@@ -24,7 +24,7 @@ function Header() {
   <nav className="navbar navbar-expand-lg ">
   <div className="container-fluid">
      <Link className="navbar-brand">
-         <GiLargeDress size={30} color='#FFB6C1'/>Faishon <span>Ecommerce</span>
+      Faishon <span>Ecommerce</span>
       </Link>
     <button
       className="navbar-toggler"

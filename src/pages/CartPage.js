@@ -95,7 +95,7 @@ const CartPage = () => {
     <Layout>
       <div className="cart-page">
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-md-12 cart-guest-box">
             <h1 className="text-center bg-light p-2 mb-1">
               {!auth?.user
                 ? "Hello Guest"
@@ -110,12 +110,12 @@ const CartPage = () => {
             </h1>
           </div>
         </div>
-        <div className="container">
+        <div className="container mt-4">
           <div className="row">
             <div className="col-md-7">
               {cart?.map((p) => (
-                <div className="row card flex-row" key={p._id}>
-                  <div className="col-md-4">
+                <div className="row card flex-row card-borde responsive" key={p._id}>
+                  <div className="col-md-4 responsive-img">
                     <img
                       src={`${baseUrl}/api/product/product-photo/${p._id}`}
                       className="card-img-top"
@@ -124,12 +124,12 @@ const CartPage = () => {
                       height={"130px"}
                     />
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-4 cart-detail responsive-detail">
                     <p>{p.name}</p>
-                    <p>{p.description.substring(0, 30)}</p>
-                    <p>Price : {p.price}</p>
+                    <p>{p.description.substring(0, 20)}..</p>
+                    <p>Price : ${p.price}</p>
                   </div>
-                  <div className="col-md-4 cart-remove-btn">
+                  <div className="col-md-4 cart-remove-btn responsive-button">
                     <button
                       className="btn btn-danger"
                       onClick={() => removeCartItem(p._id)}

@@ -83,7 +83,7 @@ filters
   font-weight: bold;
   font-size: 20px !important;
 }
-.btn{
+/* .btn{
     border: none;
     border-radius: 5px;
     font-family: "Playfair Display", sans-serif;
@@ -93,4 +93,4 @@ filters
 .btn:hover{
     border: 2px solid #D63357 ;
     color: #D63357 ;
-}
+} */
